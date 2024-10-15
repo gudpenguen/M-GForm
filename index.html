@@ -186,6 +186,30 @@
             color: #FFFFFF;
             box-sizing: border-box;
         }
+        .tab-container {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            background-color: #FFFFFF;
+            color: #002045;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .tab-button.active {
+            background-color: #D0AE93;
+        }
+        .tab-button:hover {
+            background-color: #D0AE93;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -345,30 +369,50 @@
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <h2>FATURA ADRESİ</h2>
-                    <div class="form-row">
-                        <div class="form-group" style="display: flex; align-items: center;">
-                            <label for="invoiceNameTr" style="width: 120px; margin-right: 10px;">Fatura Adı:</label>
-                            <input type="text" id="invoiceNameTr" name="invoiceName" style="flex: 1;">
+                <div class="form-section" id="invoiceInfoTr">
+                    <h2>FATURA BİLGİLERİ</h2>
+                    <div class="tab-container">
+                        <button type="button" class="tab-button active" onclick="switchTab('bireysel', 'Tr')">Bireysel</button>
+                        <button type="button" class="tab-button" onclick="switchTab('kurumsal', 'Tr')">Kurumsal</button>
+                    </div>
+                    <div id="bireyselTabTr" class="tab-content active">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="individualNameTr">Ad & Soyad:</label>
+                                <input type="text" id="individualNameTr" name="individualName">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="identityNumberTr">Kimlik Numarası:</label>
+                                <input type="text" id="identityNumberTr" name="identityNumber">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group" style="display: flex; align-items: center;">
-                            <label for="taxOfficeTr" style="width: 120px; margin-right: 10px;">Vergi Dairesi:</label>
-                            <input type="text" id="taxOfficeTr" name="taxOffice" style="flex: 1;">
+                    <div id="kurumsalTabTr" class="tab-content">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="invoiceNameTr">Fatura Adı:</label>
+                                <input type="text" id="invoiceNameTr" name="invoiceName">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group" style="display: flex; align-items: center;">
-                            <label for="taxNumberTr" style="width: 120px; margin-right: 10px;">Vergi Numarası:</label>
-                            <input type="text" id="taxNumberTr" name="taxNumber" style="flex: 1;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="taxOfficeTr">Vergi Dairesi:</label>
+                                <input type="text" id="taxOfficeTr" name="taxOffice">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="invoiceAddressTr">Fatura Adresi:</label>
-                            <textarea id="invoiceAddressTr" name="invoiceAddress" rows="3"></textarea>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="taxNumberTr">Vergi Numarası:</label>
+                                <input type="text" id="taxNumberTr" name="taxNumber">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="invoiceAddressTr">Fatura Adresi:</label>
+                                <textarea id="invoiceAddressTr" name="invoiceAddress" rows="3"></textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
@@ -550,30 +594,50 @@ Dikkat: Formu doldurmadan önce aşağıda paylaşılan talimatları dikkatlice 
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <h2>INVOICE ADDRESS</h2>
-                    <div class="form-row">
-                        <div class="form-group" style="display: flex; align-items: center;">
-                            <label for="invoiceNameEn" style="width: 120px; margin-right: 10px;">Invoice Name:</label>
-                            <input type="text" id="invoiceNameEn" name="invoiceName" style="flex: 1;">
+                <div class="form-section" id="invoiceInfoEn">
+                    <h2>INVOICE INFORMATION</h2>
+                    <div class="tab-container">
+                        <button type="button" class="tab-button active" onclick="switchTab('individual', 'En')">Individual</button>
+                        <button type="button" class="tab-button" onclick="switchTab('corporate', 'En')">Corporate</button>
+                    </div>
+                    <div id="individualTabEn" class="tab-content active">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="individualNameEn">Name & Surname:</label>
+                                <input type="text" id="individualNameEn" name="individualName">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="identityNumberEn">Identity Number:</label>
+                                <input type="text" id="identityNumberEn" name="identityNumber">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group" style="display: flex; align-items: center;">
-                            <label for="taxOfficeEn" style="width: 120px; margin-right: 10px;">Tax Office:</label>
-                            <input type="text" id="taxOfficeEn" name="taxOffice" style="flex: 1;">
+                    <div id="corporateTabEn" class="tab-content">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="invoiceNameEn">Invoice Name:</label>
+                                <input type="text" id="invoiceNameEn" name="invoiceName">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group" style="display: flex; align-items: center;">
-                            <label for="taxNumberEn" style="width: 120px; margin-right: 10px;">Tax Number:</label>
-                            <input type="text" id="taxNumberEn" name="taxNumber" style="flex: 1;">
+                        <div class="form-row">
+                            <div class="form-group">
+                              <label for="taxOfficeEn">Tax Office:</label>
+                                <input type="text" id="taxOfficeEn" name="taxOffice">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="invoiceAddressEn">Invoice Address:</label>
-                            <textarea id="invoiceAddressEn" name="invoiceAddress" rows="3"></textarea>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="taxNumberEn">Tax Number:</label>
+                                <input type="text" id="taxNumberEn" name="taxNumber">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="invoiceAddressEn">Invoice Address:</label>
+                                <textarea id="invoiceAddressEn" name="invoiceAddress" rows="3"></textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
@@ -610,74 +674,74 @@ Attention: Please carefully read the instructions shared below before filling ou
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            function toggleFlightInfo(lang) {
-                const serviceType = document.getElementById('serviceType' + lang).value;
-                const arrivalInfo = document.getElementById('arrivalInfo' + lang);
-                const departureInfo = document.getElementById('departureInfo' + lang);
+    function toggleFlightInfo(lang) {
+        const serviceType = document.getElementById('serviceType' + lang).value;
+        const arrivalInfo = document.getElementById('arrivalInfo' + lang);
+        const departureInfo = document.getElementById('departureInfo' + lang);
 
-                arrivalInfo.classList.add('hidden');
-                departureInfo.classList.add('hidden');
+        arrivalInfo.classList.add('hidden');
+        departureInfo.classList.add('hidden');
 
-                if (serviceType === 'arrival') {
-                    arrivalInfo.classList.remove('hidden');
-                } else if (serviceType === 'departure') {
-                    departureInfo.classList.remove('hidden');
-                } else if (serviceType === 'transit') {
-                    arrivalInfo.classList.remove('hidden');
-                    departureInfo.classList.remove('hidden');
-                }
-            }
+        if (serviceType === 'arrival') {
+            arrivalInfo.classList.remove('hidden');
+        } else if (serviceType === 'departure') {
+            departureInfo.classList.remove('hidden');
+        } else if (serviceType === 'transit') {
+            arrivalInfo.classList.remove('hidden');
+            departureInfo.classList.remove('hidden');
+        }
+    }
 
-            function toggleCityTransferInfo(lang) {
-                const cityTransferCheckbox = document.getElementById('cityTransfer' + lang);
-                const cityTransferInfo = document.getElementById('cityTransferInfo' + lang);
+    function toggleCityTransferInfo(lang) {
+        const cityTransferCheckbox = document.getElementById('cityTransfer' + lang);
+        const cityTransferInfo = document.getElementById('cityTransferInfo' + lang);
 
-                if (cityTransferCheckbox.checked) {
-                    cityTransferInfo.classList.remove('hidden');
-                } else {
-                    cityTransferInfo.classList.add('hidden');
-                }
-            }
+        if (cityTransferCheckbox.checked) {
+            cityTransferInfo.classList.remove('hidden');
+        } else {
+            cityTransferInfo.classList.add('hidden');
+        }
+    }
 
-            function toggleAccountNumberField(lang) {
-                const hasAccountNumber = document.getElementById('hasAccountNumber' + lang);
-                const accountNumberContainer = document.getElementById('accountNumberContainer' + lang);
-                accountNumberContainer.style.display = hasAccountNumber.checked ? 'block' : 'none';
-            }
+    function toggleAccountNumberField(lang) {
+        const hasAccountNumber = document.getElementById('hasAccountNumber' + lang);
+        const accountNumberContainer = document.getElementById('accountNumberContainer' + lang);
+        accountNumberContainer.style.display = hasAccountNumber.checked ? 'block' : 'none';
+    }
 
-            function formatFlightCode(input) {
-                let value = input.value.trim().toUpperCase();
-                value = value.replace(/[^A-Z0-9]/g, '');
-                
-                if (value.length >= 2) {
-                    let letters = value.substring(0, 2);
-                    let numbers = value.substring(2).padStart(4, '0');
-                    input.value = letters + numbers;
-                } else {
-                    input.value = value;
-                }
-            }
+    function formatFlightCode(input) {
+        let value = input.value.trim().toUpperCase();
+        value = value.replace(/[^A-Z0-9]/g, '');
+        
+        if (value.length >= 2) {
+            let letters = value.substring(0, 2);
+            let numbers = value.substring(2).padStart(4, '0');
+            input.value = letters + numbers;
+        } else {
+            input.value = value;
+        }
+    }
 
-            function formatDate(dateString) {
-                if (!dateString) return '';
-                const date = new Date(dateString);
-                return date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
-            }
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
+    }
 
-            function translateServiceType(type) {
-                switch (type) {
-                    case 'arrival':
-                        return 'Arrival';
-                    case 'departure':
-                        return 'Departure';
-                    case 'transit':
-                        return 'Transit';
-                    default:
-                        return type;
-                }
-            }
+    function translateServiceType(type) {
+        switch (type) {
+            case 'arrival':
+                return 'Arrival';
+            case 'departure':
+                return 'Departure';
+            case 'transit':
+                return 'Transit';
+            default:
+                return type;
+        }
+    }
 
-            function downloadPDF(lang) {
+    function downloadPDF(lang) {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
 
@@ -726,70 +790,91 @@ Attention: Please carefully read the instructions shared below before filling ou
             }
 
             function resetForm(lang) {
-                if (confirm(lang === 'Tr' ? 'Tüm bilgiler silinecek. Emin misiniz?' : 'All information will be deleted. Are you sure?')) {
-                    document.getElementById('reservationForm' + lang).reset();
-                    document.getElementById('arrivalInfo' + lang).classList.add('hidden');
-                    document.getElementById('departureInfo' + lang).classList.add('hidden');
-                    document.getElementById('cityTransferInfo' + lang).classList.add('hidden');
-                    document.getElementById('accountNumberContainer' + lang).style.display = 'none';
-                    deactivateResetButton(lang);
-                }
-            }
+        if (confirm(lang === 'Tr' ? 'Tüm bilgiler silinecek. Emin misiniz?' : 'All information will be deleted. Are you sure?')) {
+            document.getElementById('reservationForm' + lang).reset();
+            document.getElementById('arrivalInfo' + lang).classList.add('hidden');
+            document.getElementById('departureInfo' + lang).classList.add('hidden');
+            document.getElementById('cityTransferInfo' + lang).classList.add('hidden');
+            document.getElementById('accountNumberContainer' + lang).style.display = 'none';
+            switchTab('bireysel', lang);
+            deactivateResetButton(lang);
+        }
+    }
 
-            function activateResetButton(lang) {
-                const resetButton = document.getElementById('resetButton' + lang);
-                resetButton.classList.add('active');
-                resetButton.disabled = false;
-            }
+    function activateResetButton(lang) {
+        const resetButton = document.getElementById('resetButton' + lang);
+        resetButton.classList.add('active');
+        resetButton.disabled = false;
+    }
 
-            function deactivateResetButton(lang) {
-                const resetButton = document.getElementById('resetButton' + lang);
-                resetButton.classList.remove('active');
-                resetButton.disabled = true;
-            }
+    function deactivateResetButton(lang) {
+        const resetButton = document.getElementById('resetButton' + lang);
+        resetButton.classList.remove('active');
+        resetButton.disabled = true;
+    }
 
-            function addEventListeners(lang) {
-                document.getElementById('serviceType' + lang).addEventListener('change', () => toggleFlightInfo(lang));
-                document.getElementById('cityTransfer' + lang).addEventListener('change', () => toggleCityTransferInfo(lang));
-                document.getElementById('hasAccountNumber' + lang).addEventListener('change', () => toggleAccountNumberField(lang));
-                
-                const arrivalFlightCode = document.getElementById('arrivalFlightCode' + lang);
-                if (arrivalFlightCode) {
-                    arrivalFlightCode.addEventListener('blur', function() { formatFlightCode(this); });
-                }
-                
-                const departureFlightCode = document.getElementById('departureFlightCode' + lang);
-                if (departureFlightCode) {
-                    departureFlightCode.addEventListener('blur', function() { formatFlightCode(this); });
-                }
-                
-                document.getElementById('pdfButton' + lang).addEventListener('click', () => downloadPDF(lang));
-                document.getElementById('resetButton' + lang).addEventListener('click', () => resetForm(lang));
+    function switchTab(tabName, lang) {
+        const tabs = document.querySelectorAll(`#invoiceInfo${lang} .tab-button`);
+        const contents = document.querySelectorAll(`#invoiceInfo${lang} .tab-content`);
+        
+        tabs.forEach(tab => tab.classList.remove('active'));
+        contents.forEach(content => content.classList.remove('active'));
+        
+        const activeTab = document.querySelector(`#invoiceInfo${lang} .tab-button:nth-child(${tabName === 'bireysel' || tabName === 'individual' ? '1' : '2'})`);
+        const activeContent = document.getElementById(`${tabName}Tab${lang}`);
+        
+        activeTab.classList.add('active');
+        activeContent.classList.add('active');
+    }
 
-                // Deactivate reset button initially
-                deactivateResetButton(lang);
-            }
+    function addEventListeners(lang) {
+        document.getElementById('serviceType' + lang).addEventListener('change', () => toggleFlightInfo(lang));
+        document.getElementById('cityTransfer' + lang).addEventListener('change', () => toggleCityTransferInfo(lang));
+        document.getElementById('hasAccountNumber' + lang).addEventListener('change', () => toggleAccountNumberField(lang));
+        
+        const arrivalFlightCode = document.getElementById('arrivalFlightCode' + lang);
+        if (arrivalFlightCode) {
+            arrivalFlightCode.addEventListener('blur', function() { formatFlightCode(this); });
+        }
+        
+        const departureFlightCode = document.getElementById('departureFlightCode' + lang);
+        if (departureFlightCode) {
+            departureFlightCode.addEventListener('blur', function() { formatFlightCode(this); });
+        }
+        
+        document.getElementById('pdfButton' + lang).addEventListener('click', () => downloadPDF(lang));
+        document.getElementById('resetButton' + lang).addEventListener('click', () => resetForm(lang));
 
-            function changeLanguage() {
-                const lang = document.getElementById('languageSelect').value;
-                document.getElementById('trContent').style.display = lang === 'tr' ? 'block' : 'none';
-                document.getElementById('enContent').style.display = lang === 'en' ? 'block' : 'none';
-                document.documentElement.lang = lang;
-            }
-
-            // Initialize language based on browser settings
-            const userLang = navigator.language || navigator.userLanguage;
-            const defaultLang = userLang.startsWith('tr') ? 'tr' : 'en';
-            document.getElementById('languageSelect').value = defaultLang;
-            changeLanguage();
-
-            // Add event listeners for both languages
-            addEventListeners('Tr');
-            addEventListeners('En');
-
-            // Add event listener for language change
-            document.getElementById('languageSelect').addEventListener('change', changeLanguage);
+        // Add event listeners for tab buttons
+        const tabButtons = document.querySelectorAll(`#invoiceInfo${lang} .tab-button`);
+        tabButtons.forEach((button, index) => {
+            button.addEventListener('click', () => switchTab(index === 0 ? (lang === 'Tr' ? 'bireysel' : 'individual') : (lang === 'Tr' ? 'kurumsal' : 'corporate'), lang));
         });
+
+        // Deactivate reset button initially
+        deactivateResetButton(lang);
+    }
+
+    function changeLanguage() {
+        const lang = document.getElementById('languageSelect').value;
+        document.getElementById('trContent').style.display = lang === 'tr' ? 'block' : 'none';
+        document.getElementById('enContent').style.display = lang === 'en' ? 'block' : 'none';
+        document.documentElement.lang = lang;
+    }
+
+    // Initialize language based on browser settings
+    const userLang = navigator.language || navigator.userLanguage;
+    const defaultLang = userLang.startsWith('tr') ? 'tr' : 'en';
+    document.getElementById('languageSelect').value = defaultLang;
+    changeLanguage();
+
+    // Add event listeners for both languages
+    addEventListeners('Tr');
+    addEventListeners('En');
+
+    // Add event listener for language change
+    document.getElementById('languageSelect').addEventListener('change', changeLanguage);
+});
     </script>
 </body>
 </html>
