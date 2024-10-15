@@ -175,6 +175,17 @@
             background-color: yellow;
             color: black;
         }
+        .account-number-container {
+            margin-top: 10px;
+        }
+        .account-number-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #D0AE93;
+            background-color: #000000;
+            color: #FFFFFF;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
@@ -281,7 +292,7 @@
                         </div>
                         <div class="checkbox-group">
                             <input type="checkbox" id="gatTransferTr" name="gatTransfer">
-                            <label for="gatTransferTr">GHT Transfer</label>
+                            <label for="gatTransferTr">GAT Transfer</label>
                         </div>
                     </div>
                     <div id="cityTransferInfoTr" class="hidden">
@@ -333,6 +344,44 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="form-section">
+                    <h2>FATURA ADRESİ</h2>
+                    <div class="form-row">
+                        <div class="form-group" style="display: flex; align-items: center;">
+                            <label for="invoiceNameTr" style="width: 120px; margin-right: 10px;">Fatura Adı:</label>
+                            <input type="text" id="invoiceNameTr" name="invoiceName" style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="display: flex; align-items: center;">
+                            <label for="taxOfficeTr" style="width: 120px; margin-right: 10px;">Vergi Dairesi:</label>
+                            <input type="text" id="taxOfficeTr" name="taxOffice" style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="display: flex; align-items: center;">
+                            <label for="taxNumberTr" style="width: 120px; margin-right: 10px;">Vergi Numarası:</label>
+                            <input type="text" id="taxNumberTr" name="taxNumber" style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="invoiceAddressTr">Fatura Adresi:</label>
+                            <textarea id="invoiceAddressTr" name="invoiceAddress" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="hasAccountNumberTr" name="hasAccountNumber">
+                            <label for="hasAccountNumberTr">Tarafınızca oluşturulmuş cari numaramız bulunuyor.</label>
+                        </div>
+                    </div>
+                    <div id="accountNumberContainerTr" class="account-number-container" style="display: none;">
+                        <label for="accountNumberTr">Cari numarası:</label>
+                        <input type="number" id="accountNumberTr" name="accountNumber" class="account-number-input">
+                    </div>
+                </div>
             </form>
             <div class="instructions">
 Kaydedilen PDF dosyası <span class="highlighted">resevation@igapass.com</span> e-mail adresine gönderilmelidir.
@@ -344,7 +393,7 @@ Dikkat: Formu doldurmadan önce aşağıda paylaşılan talimatları dikkatlice 
 3. Transit: Hizmetimizde, ek olarak devam uçuşu kısmını doldurmanızı rica ederiz. 
 4. IGA Meet & Greet servisi: 0-6 yaş arası çocuklar için ücretsiz, 7-12 yaş arası çocuklar için %50, 65 yaş ve üzeri yetişkinler için %35 indirimlidir. İndirimden faydalanabilmeniz adına pasaport görselini paylaşmanızı rica ederiz. 
 5. Board to Board (Transfer) rezervasyonları: İki uçuş arasındaki sürenin 90 dakikadan az olması halinde, misafirimizin diğer uçuşa yetişmesi konusunda Taya Yolcu Hizmetleri sorumlu tutulamayacaktır. 
-6. Her uçuş ayrı bir rezervasyondur. Tarih, uçuş ve kişi farklı olması durumunda (birlikte seyahat etmedikleri sürece) yeni bir rezervasyon formu oluşturulmalıdır. 
+6. Her uçuş ayrı bir rezervasyondur. Rezervasyonlarınızı sıralı olarak listede belirtmenizi rica ederiz. Tarih, uçuş ve kişi farklı olması durumunda (birlikte seyahat etmedikleri sürece) bir alt satıra giriş yapılmalıdır. 
 7. Taya Yolcu Hizmetleri A.Ş.'nin görevli memuru, formda belirtilen kontak ve şoför numarası dışında başka bir iletişim numarası ile bağlantı kurmakla yükümlü değildir.
             </div>
             <div class="button-container">
@@ -500,6 +549,44 @@ Dikkat: Formu doldurmadan önce aşağıda paylaşılan talimatları dikkatlice 
                         </div>
                     </div>
                 </div>
+
+                <div class="form-section">
+                    <h2>INVOICE ADDRESS</h2>
+                    <div class="form-row">
+                        <div class="form-group" style="display: flex; align-items: center;">
+                            <label for="invoiceNameEn" style="width: 120px; margin-right: 10px;">Invoice Name:</label>
+                            <input type="text" id="invoiceNameEn" name="invoiceName" style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="display: flex; align-items: center;">
+                            <label for="taxOfficeEn" style="width: 120px; margin-right: 10px;">Tax Office:</label>
+                            <input type="text" id="taxOfficeEn" name="taxOffice" style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="display: flex; align-items: center;">
+                            <label for="taxNumberEn" style="width: 120px; margin-right: 10px;">Tax Number:</label>
+                            <input type="text" id="taxNumberEn" name="taxNumber" style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="invoiceAddressEn">Invoice Address:</label>
+                            <textarea id="invoiceAddressEn" name="invoiceAddress" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="hasAccountNumberEn" name="hasAccountNumber">
+                            <label for="hasAccountNumberEn">We have an account number created by you.</label>
+                        </div>
+                    </div>
+                    <div id="accountNumberContainerEn" class="account-number-container" style="display: none;">
+                        <label for="accountNumberEn">Account number:</label>
+                        <input type="number" id="accountNumberEn" name="accountNumber" class="account-number-input">
+                    </div>
+                </div>
             </form>
             <div class="instructions">
 The saved PDF file should be sent to the email address <span class="highlighted">resevation@igapass.com</span>.
@@ -511,7 +598,7 @@ Attention: Please carefully read the instructions shared below before filling ou
 3. Transit: For our service, please additionally fill in the connecting flight section.
 4. IGA Meet & Greet service: Free for children aged 0-6, 50% discount for children aged 7-12, and 35% discount for adults aged 65 and over. To benefit from the discount, please share a passport image.
 5. Board to Board (Transfer) reservations: If the time between two flights is less than 90 minutes, Taya Passenger Services cannot be held responsible for the guest making it to the other flight.
-6. Each flight is a separate reservation. If the date, flight, and person are different (unless they are traveling together), an new reservation form PDF must be made.
+6. Each flight is a separate reservation. Please specify your reservations in order on the list. If the date, flight, and person are different (unless they are traveling together), an entry should be made on the line below.
 7. The authorized officer of Taya Passenger Services Inc. is not obliged to contact any communication number other than the contact and driver numbers specified in the form.
             </div>
             <div class="button-container">
@@ -550,6 +637,12 @@ Attention: Please carefully read the instructions shared below before filling ou
                 } else {
                     cityTransferInfo.classList.add('hidden');
                 }
+            }
+
+            function toggleAccountNumberField(lang) {
+                const hasAccountNumber = document.getElementById('hasAccountNumber' + lang);
+                const accountNumberContainer = document.getElementById('accountNumberContainer' + lang);
+                accountNumberContainer.style.display = hasAccountNumber.checked ? 'block' : 'none';
             }
 
             function formatFlightCode(input) {
@@ -638,6 +731,7 @@ Attention: Please carefully read the instructions shared below before filling ou
                     document.getElementById('arrivalInfo' + lang).classList.add('hidden');
                     document.getElementById('departureInfo' + lang).classList.add('hidden');
                     document.getElementById('cityTransferInfo' + lang).classList.add('hidden');
+                    document.getElementById('accountNumberContainer' + lang).style.display = 'none';
                     deactivateResetButton(lang);
                 }
             }
@@ -657,6 +751,7 @@ Attention: Please carefully read the instructions shared below before filling ou
             function addEventListeners(lang) {
                 document.getElementById('serviceType' + lang).addEventListener('change', () => toggleFlightInfo(lang));
                 document.getElementById('cityTransfer' + lang).addEventListener('change', () => toggleCityTransferInfo(lang));
+                document.getElementById('hasAccountNumber' + lang).addEventListener('change', () => toggleAccountNumberField(lang));
                 
                 const arrivalFlightCode = document.getElementById('arrivalFlightCode' + lang);
                 if (arrivalFlightCode) {
