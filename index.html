@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservation Form / Rezervasyon Formu</title>
+    <title>Meet & Greet Reservation Form / Meet & Greet Rezervasyon Formu</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <style>
@@ -223,7 +223,7 @@
 
         <!-- Turkish content -->
         <div id="trContent">
-            <h1>Rezervasyon Formu</h1>
+            <h1>Meet & Greet Rezervasyon Formu</h1>
             <form id="reservationFormTr">
                 <div class="form-section">
                     <h2>MİSAFİR BİLGİLERİ</h2>
@@ -274,7 +274,7 @@
                 </div>
 
                 <div class="form-section passenger-info">
-                    <h2>MİSAFİR SAYISI</h2>
+                    <h2>YOLCU BİLGİLERİ</h2>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="adultCountTr">Yetişkin Sayısı:</label>
@@ -367,7 +367,7 @@
                             <input type="tel" id="driverNumberTr" name="driverNumber">
                         </div>
                     </div>
-                    <p class="info-text">*Giden hizmet türünde buluşma sağlanabilmesi için kontak numarası gerekmektedir.</p>
+                          <p class="info-text">*Giden hizmet türünde buluşma sağlanabilmesi için kontak numarası gerekmektedir.</p>
                 </div>
 
                 <div class="form-section" id="invoiceInfoTr">
@@ -449,7 +449,7 @@ Dikkat: Formu doldurmadan önce aşağıda paylaşılan talimatları dikkatlice 
 
         <!-- English content -->
         <div id="enContent" style="display: none;">
-            <h1>Reservation Form</h1>
+            <h1>Meet & Greet Reservation Form</h1>
             <form id="reservationFormEn">
                 <div class="form-section">
                     <h2>GUEST INFORMATION</h2>
@@ -500,7 +500,7 @@ Dikkat: Formu doldurmadan önce aşağıda paylaşılan talimatları dikkatlice 
                 </div>
 
                 <div class="form-section passenger-info">
-                    <h2>NUMBER OF GUESTS</h2>
+                    <h2>PASSENGER INFORMATION</h2>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="adultCountEn">Number of Adults:</label>
@@ -593,9 +593,9 @@ Dikkat: Formu doldurmadan önce aşağıda paylaşılan talimatları dikkatlice 
                             <input type="tel" id="driverNumberEn" name="driverNumber">
                         </div>
                     </div>
-                    <p class="info-text">*A contact number is required to arrange a meeting for departure service types.</p>
+                   <p class="info-text">*A contact number is required to arrange a meeting for departure service types.</p>
                 </div>
-
+			
                 <div class="form-section" id="invoiceInfoEn">
                     <h2>INVOICE INFORMATION</h2>
                     <div class="tab-container">
@@ -751,7 +751,7 @@ Attention: Please carefully read the instructions shared below before filling ou
             doc.setFont('Roboto');
 
             doc.setFontSize(18);
-            doc.text(lang === 'Tr' ? "Rezervasyon Formu" : "Reservation Form", 105, 15, null, null, "center");
+            doc.text(lang === 'Tr' ? "Meet & Greet Rezervasyon Formu" : "Meet & Greet Reservation Form", 105, 15, null, null, "center");
 
             const formData = new FormData(document.getElementById('reservationForm' + lang));
             let data = [];
@@ -785,7 +785,7 @@ Attention: Please carefully read the instructions shared below before filling ou
                 columnStyles: { 0: { cellWidth: 100 }, 1: { cellWidth: 90 } }
             });
 
-            doc.save(lang === 'Tr' ? "rezervasyon_formu.pdf" : "reservation_form.pdf");
+            doc.save(lang === 'Tr' ? "meet_greet_rezervasyon_formu.pdf" : "meet_greet_reservation_form.pdf");
 
             // Activate the reset button after saving PDF
             activateResetButton(lang);
