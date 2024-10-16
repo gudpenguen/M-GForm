@@ -6,6 +6,8 @@
     <title>Meet & Greet Reservation Form / Meet & Greet Rezervasyon Formu</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -71,10 +73,10 @@
         }
         input, select, textarea {
             width: 100%;
-            padding: 8px;
+            padding: 5px;
             border: 1px solid #D0AE93;
             border-radius: 0;
-            font-size: 14px;
+            font-size: 12px;
             background-color: #000000;
             color: #FFFFFF;
             box-sizing: border-box;
@@ -250,7 +252,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="arrivalServiceDateTr">Gelen Hizmet Tarihi:</label>
-                                <input type="date" id="arrivalServiceDateTr" name="arrivalServiceDate">
+                                <input type="text" id="arrivalServiceDateTr" name="arrivalServiceDate" placeholder="gg.aa.yyyy">
                                 <p class="info-text">*Uçağınızın İstanbul Havalimanına <strong>İNİŞ</strong> tarihini yazmanızı rica ederiz.</p>
                             </div>
                             <div class="form-group">
@@ -263,7 +265,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="departureServiceDateTr">Giden Uçuş Tarihi:</label>
-                                <input type="date" id="departureServiceDateTr" name="departureServiceDate">
+                                <input type="text" id="departureServiceDateTr" name="departureServiceDate" placeholder="gg.aa.yyyy">
                             </div>
                             <div class="form-group">
                                 <label for="departureFlightCodeTr">Giden Uçuş Kodu:</label>
@@ -323,7 +325,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="pickupDateTr">Alınma Tarihi:</label>
-                                <input type="date" id="pickupDateTr" name="pickupDate">
+                                <input type="text" id="pickupDateTr" name="pickupDate" placeholder="gg.aa.yyyy">
                             </div>
                             <div class="form-group">
                                 <label for="pickupTimeTr">Alınma Saati:</label>
@@ -367,7 +369,7 @@
                             <input type="tel" id="driverNumberTr" name="driverNumber">
                         </div>
                     </div>
-                          <p class="info-text">*Giden hizmet türünde buluşma sağlanabilmesi için kontak numarası gerekmektedir.</p>
+                    <p class="info-text">*Giden hizmet türünde buluşma sağlanabilmesi için kontak numarası gerekmektedir.</p>
                 </div>
 
                 <div class="form-section" id="invoiceInfoTr">
@@ -476,7 +478,7 @@ Dikkat: Formu doldurmadan önce aşağıda paylaşılan talimatları dikkatlice 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="arrivalServiceDateEn">Arrival Service Date:</label>
-                                <input type="date" id="arrivalServiceDateEn" name="arrivalServiceDate">
+                                <input type="text" id="arrivalServiceDateEn" name="arrivalServiceDate" placeholder="dd.mm.yyyy">
                                 <p class="info-text">*Please enter the date your flight <strong>LANDS</strong> at Istanbul Airport.</p>
                             </div>
                             <div class="form-group">
@@ -489,7 +491,7 @@ Dikkat: Formu doldurmadan önce aşağıda paylaşılan talimatları dikkatlice 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="departureServiceDateEn">Departure Flight Date:</label>
-                                <input type="date" id="departureServiceDateEn" name="departureServiceDate">
+                                <input type="text" id="departureServiceDateEn" name="departureServiceDate" placeholder="dd.mm.yyyy">
                             </div>
                             <div class="form-group">
                                 <label for="departureFlightCodeEn">Departure Flight Code:</label>
@@ -549,7 +551,7 @@ Dikkat: Formu doldurmadan önce aşağıda paylaşılan talimatları dikkatlice 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="pickupDateEn">Pick-up Date:</label>
-                                <input type="date" id="pickupDateEn" name="pickupDate">
+                                <input type="text" id="pickupDateEn" name="pickupDate" placeholder="dd.mm.yyyy">
                             </div>
                             <div class="form-group">
                                 <label for="pickupTimeEn">Pick-up Time:</label>
@@ -625,7 +627,7 @@ Dikkat: Formu doldurmadan önce aşağıda paylaşılan talimatları dikkatlice 
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                              <label for="taxOfficeEn">Tax Office:</label>
+                                <label for="taxOfficeEn">Tax Office:</label>
                                 <input type="text" id="taxOfficeEn" name="taxOffice">
                             </div>
                         </div>
@@ -724,10 +726,10 @@ Attention: Please carefully read the instructions shared below before filling ou
             }
         }
 
-        function formatDate(dateString) {
+        function formatDate(dateString, lang) {
             if (!dateString) return '';
             const date = new Date(dateString);
-            return date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
+            return date.toLocaleDateString(lang === 'Tr' ? 'tr-TR' : 'en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
         }
 
         function translateServiceType(type) {
@@ -762,7 +764,7 @@ Attention: Please carefully read the instructions shared below before filling ou
                     const label = labelElement.textContent;
                     
                     if (key.includes('Date')) {
-                        value = formatDate(value);
+                        value = formatDate(value, lang);
                     }
                     
                     if (key === 'serviceType') {
@@ -836,6 +838,34 @@ Attention: Please carefully read the instructions shared below before filling ou
             activeContent.classList.add('active');
         }
 
+        function initializeDatePickers(lang) {
+            const dateInputs = [
+                document.getElementById('arrivalServiceDate' + lang),
+                document.getElementById('departureServiceDate' + lang),
+                document.getElementById('pickupDate' + lang)
+            ];
+
+            dateInputs.forEach(input => {
+                if (input) {
+                    flatpickr(input, {
+                        dateFormat: "d.m.Y",
+                        allowInput: true,
+                        onClose: function(selectedDates, dateStr, instance) {
+                            if (dateStr && !selectedDates[0]) {
+                                const parts = dateStr.split('.');
+                                if (parts.length === 3) {
+                                    const day = parts[0].padStart(2, '0');
+                                    const month = parts[1].padStart(2, '0');
+                                    const year = parts[2].padStart(4, '20');
+                                    instance.setDate(`${day}.${month}.${year}`, true, "d.m.Y");
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
         function addEventListeners(lang) {
             document.getElementById('serviceType' + lang).addEventListener('change', () => toggleFlightInfo(lang));
             document.getElementById('cityTransfer' + lang).addEventListener('change', () => toggleCityTransferInfo(lang));
@@ -881,9 +911,13 @@ Attention: Please carefully read the instructions shared below before filling ou
         addEventListeners('Tr');
         addEventListeners('En');
 
+        // Initialize date pickers for both languages
+        initializeDatePickers('Tr');
+        initializeDatePickers('En');
+
         // Add event listener for language change
         document.getElementById('languageSelect').addEventListener('change', changeLanguage);
     });
-</script>
+    </script>
 </body>
 </html>
