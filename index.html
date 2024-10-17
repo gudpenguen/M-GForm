@@ -24,7 +24,7 @@
         .container {
             width: 100%;
             max-width: 800px;
-            background-color: #002045;
+            background-color: #1A3658;
             padding: 20px;
             border: 6px solid #D0AE93;
             box-sizing: border-box;
@@ -73,10 +73,10 @@
         }
         input, select, textarea {
             width: 100%;
-            padding: 5px;
+            padding: 8px;
             border: 1px solid #D0AE93;
             border-radius: 0;
-            font-size: 12px;
+            font-size: 14px;
             background-color: #000000;
             color: #FFFFFF;
             box-sizing: border-box;
@@ -212,6 +212,24 @@
         .tab-content.active {
             display: block;
         }
+        /* New styles for code highlighting */
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .string { color: #a6e22e; }
+        .number { color: #ae81ff; }
+        .boolean { color: #66d9ef; }
+        .null { color: #66d9ef; }
+        .key { color: #f92672; }
+        .keyword { color: #66d9ef; }
+        .comment { color: #75715e; }
     </style>
 </head>
 <body>
@@ -677,247 +695,255 @@ Attention: Please carefully read the instructions shared below before filling ou
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function toggleFlightInfo(lang) {
-            const serviceType = document.getElementById('serviceType' + lang).value;
-            const arrivalInfo = document.getElementById('arrivalInfo' + lang);
-            const departureInfo = document.getElementById('departureInfo' + lang);
+document.addEventListener('DOMContentLoaded', function() {
+    function toggleFlightInfo(lang) {
+        const serviceType = document.getElementById('serviceType' + lang).value;
+        const arrivalInfo = document.getElementById('arrivalInfo' + lang);
+        const departureInfo = document.getElementById('departureInfo' + lang);
 
-            arrivalInfo.classList.add('hidden');
-            departureInfo.classList.add('hidden');
+        arrivalInfo.classList.add('hidden');
+        departureInfo.classList.add('hidden');
 
-            if (serviceType === 'arrival') {
-                arrivalInfo.classList.remove('hidden');
-            } else if (serviceType === 'departure') {
-                departureInfo.classList.remove('hidden');
-            } else if (serviceType === 'transit') {
-                arrivalInfo.classList.remove('hidden');
-                departureInfo.classList.remove('hidden');
-            }
+        if (serviceType === 'arrival') {
+            arrivalInfo.classList.remove('hidden');
+        } else if (serviceType === 'departure') {
+            departureInfo.classList.remove('hidden');
+        } else if (serviceType === 'transit') {
+            arrivalInfo.classList.remove('hidden');
+            departureInfo.classList.remove('hidden');
         }
+    }
 
-        function toggleCityTransferInfo(lang) {
-            const cityTransferCheckbox = document.getElementById('cityTransfer' + lang);
-            const cityTransferInfo = document.getElementById('cityTransferInfo' + lang);
+    function toggleCityTransferInfo(lang) {
+        const cityTransferCheckbox = document.getElementById('cityTransfer' + lang);
+        const cityTransferInfo = document.getElementById('cityTransferInfo' + lang);
 
-            if (cityTransferCheckbox.checked) {
-                cityTransferInfo.classList.remove('hidden');
-            } else {
-                cityTransferInfo.classList.add('hidden');
-            }
+        if (cityTransferCheckbox.checked) {
+            cityTransferInfo.classList.remove('hidden');
+        } else {
+            cityTransferInfo.classList.add('hidden');
         }
+    }
 
-        function toggleAccountNumberField(lang) {
-            const hasAccountNumber = document.getElementById('hasAccountNumber' + lang);
-            const accountNumberContainer = document.getElementById('accountNumberContainer' + lang);
-            accountNumberContainer.style.display = hasAccountNumber.checked ? 'block' : 'none';
+    function toggleAccountNumberField(lang) {
+        const hasAccountNumber = document.getElementById('hasAccountNumber' + lang);
+        const accountNumberContainer = document.getElementById('accountNumberContainer' + lang);
+        accountNumberContainer.style.display = hasAccountNumber.checked ? 'block' : 'none';
+    }
+
+    function formatFlightCode(input) {
+        let value = input.value.trim().toUpperCase();
+        value = value.replace(/[^A-Z0-9]/g, '');
+        
+        if (value.length >= 2) {
+            let letters = value.substring(0, 2);
+            let numbers = value.substring(2).padStart(4, '0');
+            input.value = letters + numbers;
+        } else {
+            input.value = value;
         }
+    }
 
-        function formatFlightCode(input) {
-            let value = input.value.trim().toUpperCase();
-            value = value.replace(/[^A-Z0-9]/g, '');
-            
-            if (value.length >= 2) {
-                let letters = value.substring(0, 2);
-                let numbers = value.substring(2).padStart(4, '0');
-                input.value = letters + numbers;
-            } else {
-                input.value = value;
-            }
+    function formatDate(dateString, lang) {
+        if (!dateString) return '';
+        const parts = dateString.split('.');
+        if (parts.length !== 3) return dateString; // Return original string if it's not in the expected format
+        const [day, month, year] = parts;
+        return `${day}.${month}.${year}`;
+    }
+
+    function translateServiceType(type) {
+        switch (type) {
+            case 'arrival':
+                return 'Arrival';
+            case 'departure':
+                return 'Departure';
+            case 'transit':
+                return 'Transit';
+            default:
+                return type;
         }
+    }
 
-        function formatDate(dateString, lang) {
-            if (!dateString) return '';
-            const date = new Date(dateString);
-            return date.toLocaleDateString(lang === 'Tr' ? 'tr-TR' : 'en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
-        }
+    function downloadPDF(lang) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
 
-        function translateServiceType(type) {
-            switch (type) {
-                case 'arrival':
-                    return 'Arrival';
-                case 'departure':
-                    return 'Departure';
-                case 'transit':
-                    return 'Transit';
-                default:
-                    return type;
-            }
-        }
+        doc.addFont('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf', 'Roboto', 'normal');
+        doc.setFont('Roboto');
 
-        function downloadPDF(lang) {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+        doc.setFontSize(18);
+        doc.text(lang === 'Tr' ? "Meet & Greet Rezervasyon Formu" : "Meet & Greet Reservation Form", 105, 15, null, null, "center");
 
-            doc.addFont('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf', 'Roboto', 'normal');
-            doc.setFont('Roboto');
+        const formData = new FormData(document.getElementById('reservationForm' + lang));
+        let data = [];
 
-            doc.setFontSize(18);
-            doc.text(lang === 'Tr' ? "Meet & Greet Rezervasyon Formu" : "Meet & Greet Reservation Form", 105, 15, null, null, "center");
-
-            const formData = new FormData(document.getElementById('reservationForm' + lang));
-            let data = [];
-
-            for (let [key, value] of formData.entries()) {
-                const labelElement = document.querySelector(`label[for="${key + lang}"]`);
-                if (labelElement) {
-                    const label = labelElement.textContent;
-                    
-                    if (key.includes('Date')) {
-                        value = formatDate(value, lang);
-                    }
-                    
-                    if (key === 'serviceType') {
-                        value = translateServiceType(value);
-                    }
-
-                    if (key.startsWith('flowerGreeting') || key.startsWith('logoGreeting') || key.startsWith('cityTransfer') || key.startsWith('gatTransfer')) {
-                        value = value === 'on' ? (lang === 'Tr' ? 'Evet' : 'Yes') : (lang === 'Tr' ? 'Hayır' : 'No');
-                    }
-                    
-                    data.push([label, value]);
+        for (let [key, value] of formData.entries()) {
+            const labelElement = document.querySelector(`label[for="${key + lang}"]`);
+            if (labelElement) {
+                const label = labelElement.textContent;
+                
+                if (key.includes('Date')) {
+                    value = formatDate(value, lang);
                 }
-            }
-
-            doc.autoTable({
-                head: [[lang === 'Tr' ? 'Alan' : 'Field', lang === 'Tr' ? 'Değer' : 'Value']],
-                body: data,
-                startY: 25,
-                styles: { font: 'Roboto', fontSize: 10, cellPadding: 5 },
-                columnStyles: { 0: { cellWidth: 100 }, 1: { cellWidth: 90 } }
-            });
-
-            doc.save(lang === 'Tr' ? "meet_greet_rezervasyon_formu.pdf" : "meet_greet_reservation_form.pdf");
-
-            // Activate the reset button after saving PDF
-            activateResetButton(lang);
-        }
-
-        function resetForm(lang) {
-            if (confirm(lang === 'Tr' ? 'Tüm bilgiler silinecek. Emin misiniz?' : 'All information will be deleted. Are you sure?')) {
-                document.getElementById('reservationForm' + lang).reset();
-                document.getElementById('arrivalInfo' + lang).classList.add('hidden');
-                document.getElementById('departureInfo' + lang).classList.add('hidden');
-                document.getElementById('cityTransferInfo' + lang).classList.add('hidden');
-                document.getElementById('accountNumberContainer' + lang).style.display = 'none';
                 
-                // Use the correct tab name based on the language
-                const defaultTab = lang === 'Tr' ? 'bireysel' : 'individual';
-                switchTab(defaultTab, lang);
-                
-                // Make sure invoice information is visible
-                document.getElementById('invoiceInfo' + lang).style.display = 'block';
-                
-                deactivateResetButton(lang);
-            }
-        }
-
-        function activateResetButton(lang) {
-            const resetButton = document.getElementById('resetButton' + lang);
-            resetButton.classList.add('active');
-            resetButton.disabled = false;
-        }
-
-        function deactivateResetButton(lang) {
-            const resetButton = document.getElementById('resetButton' + lang);
-            resetButton.classList.remove('active');
-            resetButton.disabled = true;
-        }
-
-        function switchTab(tabName, lang) {
-            const tabs = document.querySelectorAll(`#invoiceInfo${lang} .tab-button`);
-            const contents = document.querySelectorAll(`#invoiceInfo${lang} .tab-content`);
-            
-            tabs.forEach(tab => tab.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
-            
-            const activeTab = document.querySelector(`#invoiceInfo${lang} .tab-button:nth-child(${tabName === 'bireysel' || tabName === 'individual' ? '1' : '2'})`);
-            const activeContent = document.getElementById(`${tabName}Tab${lang}`);
-            
-            activeTab.classList.add('active');
-            activeContent.classList.add('active');
-        }
-
-        function initializeDatePickers(lang) {
-            const dateInputs = [
-                document.getElementById('arrivalServiceDate' + lang),
-                document.getElementById('departureServiceDate' + lang),
-                document.getElementById('pickupDate' + lang)
-            ];
-
-            dateInputs.forEach(input => {
-                if (input) {
-                    flatpickr(input, {
-                        dateFormat: "d.m.Y",
-                        allowInput: true,
-                        onClose: function(selectedDates, dateStr, instance) {
-                            if (dateStr && !selectedDates[0]) {
-                                const parts = dateStr.split('.');
-                                if (parts.length === 3) {
-                                    const day = parts[0].padStart(2, '0');
-                                    const month = parts[1].padStart(2, '0');
-                                    const year = parts[2].padStart(4, '20');
-                                    instance.setDate(`${day}.${month}.${year}`, true, "d.m.Y");
-                                }
-                            }
-                        }
-                    });
+                if (key === 'serviceType') {
+                    value = translateServiceType(value);
                 }
-            });
+
+                if (key.startsWith('flowerGreeting') || key.startsWith('logoGreeting') || key.startsWith('cityTransfer') || key.startsWith('gatTransfer')) {
+                    value = value === 'on' ? (lang === 'Tr' ? 'Evet' : 'Yes') : (lang === 'Tr' ? 'Hayır' : 'No');
+                }
+                
+                data.push([label, value]);
+            }
         }
 
-        function addEventListeners(lang) {
-            document.getElementById('serviceType' + lang).addEventListener('change', () => toggleFlightInfo(lang));
-            document.getElementById('cityTransfer' + lang).addEventListener('change', () => toggleCityTransferInfo(lang));
-            document.getElementById('hasAccountNumber' + lang).addEventListener('change', () => toggleAccountNumberField(lang));
-            
-            const arrivalFlightCode = document.getElementById('arrivalFlightCode' + lang);
-            if (arrivalFlightCode) {
-                arrivalFlightCode.addEventListener('blur', function() { formatFlightCode(this); });
-            }
-            
-            const departureFlightCode = document.getElementById('departureFlightCode' + lang);
-            if (departureFlightCode) {
-                departureFlightCode.addEventListener('blur', function() { formatFlightCode(this); });
-            }
-            
-            document.getElementById('pdfButton' + lang).addEventListener('click', () => downloadPDF(lang));
-            document.getElementById('resetButton' + lang).addEventListener('click', () => resetForm(lang));
+        doc.autoTable({
+            head: [[lang === 'Tr' ? 'Alan' : 'Field', lang === 'Tr' ? 'Değer' : 'Value']],
+            body: data,
+            startY: 25,
+            styles: { font: 'Roboto', fontSize: 10, cellPadding: 5 },
+            columnStyles: { 0: { cellWidth: 100 }, 1: { cellWidth: 90 } }
+        });
 
-            // Add event listeners for tab buttons
-            const tabButtons = document.querySelectorAll(`#invoiceInfo${lang} .tab-button`);
-            tabButtons.forEach((button, index) => {
-                button.addEventListener('click', () => switchTab(index === 0 ? (lang === 'Tr' ? 'bireysel' : 'individual') : (lang === 'Tr' ? 'kurumsal' : 'corporate'), lang));
-            });
+        doc.save(lang === 'Tr' ? "meet_greet_rezervasyon_formu.pdf" : "meet_greet_reservation_form.pdf");
 
-            // Deactivate reset button initially
+        // Activate the reset button after saving PDF
+        activateResetButton(lang);
+    }
+
+    function resetForm(lang) {
+        if (confirm(lang === 'Tr' ? 'Tüm bilgiler silinecek. Emin misiniz?' : 'All information will be deleted. Are you sure?')) {
+            document.getElementById('reservationForm' + lang).reset();
+            document.getElementById('arrivalInfo' + lang).classList.add('hidden');
+            document.getElementById('departureInfo' + lang).classList.add('hidden');
+            document.getElementById('cityTransferInfo' + lang).classList.add('hidden');
+            document.getElementById('accountNumberContainer' + lang).style.display = 'none';
+            
+            // Use the correct tab name based on the language
+            const defaultTab = lang === 'Tr' ? 'bireysel' : 'individual';
+            switchTab(defaultTab, lang);
+            
+            // Make sure invoice information is visible
+            document.getElementById('invoiceInfo' + lang).style.display = 'block';
+            
             deactivateResetButton(lang);
         }
+    }
 
-        function changeLanguage() {
-            const lang = document.getElementById('languageSelect').value;
-            document.getElementById('trContent').style.display = lang === 'tr' ? 'block' : 'none';
-            document.getElementById('enContent').style.display = lang === 'en' ? 'block' : 'none';
-            document.documentElement.lang = lang;
+    function activateResetButton(lang) {
+        const resetButton = document.getElementById('resetButton' + lang);
+        resetButton.classList.add('active');
+        resetButton.disabled = false;
+    }
+
+    function deactivateResetButton(lang) {
+        const resetButton = document.getElementById('resetButton' + lang);
+        resetButton.classList.remove('active');
+        resetButton.disabled = true;
+    }
+
+    function switchTab(tabName, lang) {
+        const tabs = document.querySelectorAll(`#invoiceInfo${lang} .tab-button`);
+        const contents = document.querySelectorAll(`#invoiceInfo${lang} .tab-content`);
+        
+        tabs.forEach(tab => tab.classList.remove('active'));
+        contents.forEach(content => content.classList.remove('active'));
+        
+        const activeTab = document.querySelector(`#invoiceInfo${lang} .tab-button:nth-child(${tabName === 'bireysel' || tabName === 'individual' ? '1' : '2'})`);
+        const activeContent = document.getElementById(`${tabName}Tab${lang}`);
+        
+        activeTab.classList.add('active');
+        activeContent.classList.add('active');
+    }
+
+    function initializeDatePickers(lang) {
+        const dateInputs = [
+            document.getElementById('arrivalServiceDate' + lang),
+            document.getElementById('departureServiceDate' + lang),
+            document.getElementById('pickupDate' + lang)
+        ];
+
+        dateInputs.forEach(input => {
+            if (input) {
+                flatpickr(input, {
+                    dateFormat: "d.m.Y",
+                    allowInput: true,
+                    parseDate: (datestr, format) => {
+                        return flatpickr.parseDate(datestr, format);
+                    },
+                    formatDate: (date, format, locale) => {
+                        return flatpickr.formatDate(date, format);
+                    },
+                    onClose: function(selectedDates, dateStr, instance) {
+                        if (dateStr && !selectedDates[0]) {
+                            const parts = dateStr.split('.');
+                            if (parts.length === 3) {
+                                const day = parts[0].padStart(2, '0');
+                                const month = parts[1].padStart(2, '0');
+                                const year = parts[2].length === 2 ? `20${parts[2]}` : parts[2];
+                                instance.setDate(`${day}.${month}.${year}`, true, "d.m.Y");
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function addEventListeners(lang) {
+        document.getElementById('serviceType' + lang).addEventListener('change', () => toggleFlightInfo(lang));
+        document.getElementById('cityTransfer' + lang).addEventListener('change', () => toggleCityTransferInfo(lang));
+        document.getElementById('hasAccountNumber' + lang).addEventListener('change', () => toggleAccountNumberField(lang));
+        
+        const arrivalFlightCode = document.getElementById('arrivalFlightCode' + lang);
+        if (arrivalFlightCode) {
+            arrivalFlightCode.addEventListener('blur', function() { formatFlightCode(this); });
         }
+        
+        const departureFlightCode = document.getElementById('departureFlightCode' + lang);
+        if (departureFlightCode) {
+            departureFlightCode.addEventListener('blur', function() { formatFlightCode(this); });
+        }
+        
+        document.getElementById('pdfButton' + lang).addEventListener('click', () => downloadPDF(lang));
+        document.getElementById('resetButton' + lang).addEventListener('click', () => resetForm(lang));
 
-        // Initialize language based on browser settings
-        const userLang = navigator.language || navigator.userLanguage;
-        const defaultLang = userLang.startsWith('tr') ? 'tr' : 'en';
-        document.getElementById('languageSelect').value = defaultLang;
-        changeLanguage();
+        // Add event listeners for tab buttons
+        const tabButtons = document.querySelectorAll(`#invoiceInfo${lang} .tab-button`);
+        tabButtons.forEach((button, index) => {
+            button.addEventListener('click', () => switchTab(index === 0 ? (lang === 'Tr' ? 'bireysel' : 'individual') : (lang === 'Tr' ? 'kurumsal' : 'corporate'), lang));
+        });
 
-        // Add event listeners for both languages
-        addEventListeners('Tr');
-        addEventListeners('En');
+        // Deactivate reset button initially
+        deactivateResetButton(lang);
+    }
 
-        // Initialize date pickers for both languages
-        initializeDatePickers('Tr');
-        initializeDatePickers('En');
+    function changeLanguage() {
+        const lang = document.getElementById('languageSelect').value;
+        document.getElementById('trContent').style.display = lang === 'tr' ? 'block' : 'none';
+        document.getElementById('enContent').style.display = lang === 'en' ? 'block' : 'none';
+        document.documentElement.lang = lang;
+    }
 
-        // Add event listener for language change
-        document.getElementById('languageSelect').addEventListener('change', changeLanguage);
-    });
-    </script>
+    // Initialize language based on browser settings
+    const userLang = navigator.language || navigator.userLanguage;
+    const defaultLang = userLang.startsWith('tr') ? 'tr' : 'en';
+    document.getElementById('languageSelect').value = defaultLang;
+    changeLanguage();
+
+    // Add event listeners for both languages
+    addEventListeners('Tr');
+    addEventListeners('En');
+
+    // Initialize date pickers for both languages
+    initializeDatePickers('Tr');
+    initializeDatePickers('En');
+
+    // Add event listener for language change
+    document.getElementById('languageSelect').addEventListener('change', changeLanguage);
+});
+</script>
 </body>
 </html>
