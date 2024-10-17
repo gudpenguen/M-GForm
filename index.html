@@ -26,31 +26,41 @@
             max-width: 800px;
             background-color: #1A3658;
             padding: 20px;
+      		border-radius: 20px;
+      		box-shadow: 0 4px 1000px rgba(212, 187, 167, 10);
             border: 6px solid #D0AE93;
             box-sizing: border-box;
             position: relative;
         }
         h1 {
             text-align: center;
-            color: #D0AE93;
-            margin-bottom: 20px;
+    		color: #D0AE93; /* Darker color for the text, matching the container background */
+    		margin-bottom: 20px;
+    		font-size: 36px; /* Adjust size as needed */
+    		position: relative; /* Ensure the text-shadow is relative to the container */
+    		text-shadow: 
+        	1px 1px 20px #000000,   /* Subtle bottom-right dark shadow for depth */
+        	-1px -1px 3px #D0AE93; /* Lighter top-left shadow for the engraved effect */
+    		font-weight: bold;
+    		letter-spacing: 1px; /* Optional: Adds more spacing for a cleaner look */
         }
         form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 1px;
         }
         .form-section {
             border: 1px solid #D0AE93;
+      		border-radius: 5px;
             padding: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             flex-grow: 1;
         }
         .form-section h2 {
             margin-top: 0;
             font-size: 18px;
             border-bottom: 1px solid #D0AE93;
-            padding-bottom: 5px;
+            padding-bottom: 1px;
             color: #D0AE93;
         }
         .form-row {
@@ -66,7 +76,7 @@
             margin-right: 0;
         }
         label {
-            font-weight: bold;
+            font-weight: 500;
             display: block;
             margin-bottom: 5px;
             color: #FFFFFF;
@@ -75,11 +85,12 @@
             width: 100%;
             padding: 8px;
             border: 1px solid #D0AE93;
-            border-radius: 0;
+            border-radius: 7px;
             font-size: 14px;
             background-color: #000000;
             color: #FFFFFF;
             box-sizing: border-box;
+      		box-shadow: 0 2px 3px rgba(5, 5, 5, 10);
         }
         input[type="date"], input[type="time"] {
             color-scheme: dark;
@@ -95,7 +106,7 @@
         .button-container {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 50px;
             margin-top: 20px;
         }
         button {
@@ -103,8 +114,10 @@
             color: #002045;
             padding: 10px 15px;
             border: none;
+      		border-radius: 3px;
             cursor: pointer;
             font-size: 16px;
+      		box-shadow: 0 2px 9px rgba(5, 5, 5, 10);
         }
         button:hover {
             background-color: #D0AE93;
@@ -190,13 +203,19 @@
         }
         .tab-container {
             display: flex;
-            margin-bottom: 15px;
+            margin-bottom: 7px;
+      		border: 3px solid #D0AE93; /* Border connecting the buttons */
+    		border-radius: 5px; /* Rounded corners for the entire group */
+    		overflow: hidden; /* Ensure no gaps between buttons */
+    		width: fit-content; /* Fit the size of the buttons */
+    		box-shadow: 0 2px 9px rgba(5, 5, 5, 10);
         }
         .tab-button {
-            padding: 10px 20px;
+            padding: 5px 20px;
             background-color: #FFFFFF;
             color: #002045;
             border: none;
+      		border-radius: 0px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
