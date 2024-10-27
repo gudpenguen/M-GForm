@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -10,11 +12,11 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 20px;
-            background-color: #000000;
+            background-color: #1A3658;
             color: #FFFFFF;
             display: flex;
             justify-content: center;
@@ -24,25 +26,24 @@
         .container {
             width: 100%;
             max-width: 800px;
-            background-color: #1A3658;
+            background-color: #C4A484;
             padding: 20px;
-      		border-radius: 20px;
-      		box-shadow: 0 4px 1000px rgba(212, 187, 167, 10);
-            border: 6px solid #D0AE93;
+      		border-radius: 10px;
+      		box-shadow: 0 4px 200px rgba(0, 0, 0, 10);
+            border: 2px solid #C4A484;
             box-sizing: border-box;
             position: relative;
         }
         h1 {
             text-align: center;
-    		color: #D0AE93; /* Darker color for the text, matching the container background */
-    		margin-bottom: 20px;
-    		font-size: 36px; /* Adjust size as needed */
-    		position: relative; /* Ensure the text-shadow is relative to the container */
-    		text-shadow: 
-        	1px 1px 20px #000000,   /* Subtle bottom-right dark shadow for depth */
-        	-1px -1px 3px #D0AE93; /* Lighter top-left shadow for the engraved effect */
+    		color: #FFFFFF; 
+    		margin-bottom: 8px;
+    		font-size: 30px; 
+    		position: relative; 
     		font-weight: bold;
-    		letter-spacing: 1px; /* Optional: Adds more spacing for a cleaner look */
+    		letter-spacing: 5px; 
+      		border-bottom: 1px solid #DCC7B7;
+      		padding-bottom: 20px;
         }
         form {
             display: flex;
@@ -50,8 +51,6 @@
             gap: 1px;
         }
         .form-section {
-            border: 1px solid #D0AE93;
-      		border-radius: 5px;
             padding: 15px;
             margin-bottom: 8px;
             flex-grow: 1;
@@ -59,9 +58,9 @@
         .form-section h2 {
             margin-top: 0;
             font-size: 18px;
-            border-bottom: 1px solid #D0AE93;
+            border-bottom: 1px solid #DCC7B7;
             padding-bottom: 1px;
-            color: #D0AE93;
+            color: #FFFFFF;
         }
         .form-row {
             display: flex;
@@ -84,13 +83,13 @@
         input, select, textarea {
             width: 100%;
             padding: 8px;
-            border: 1px solid #D0AE93;
-            border-radius: 7px;
+            border: 1px solid #FFFF;
+            border-radius: 4px;
             font-size: 14px;
-            background-color: #000000;
-            color: #FFFFFF;
+            background-color: #FFFFFF;
+            color: #000000;
             box-sizing: border-box;
-      		box-shadow: 0 2px 3px rgba(5, 5, 5, 10);
+      		box-shadow: 0 0px 3px rgba(5, 5, 5, 10);
         }
         input[type="date"], input[type="time"] {
             color-scheme: dark;
@@ -120,7 +119,7 @@
       		box-shadow: 0 2px 9px rgba(5, 5, 5, 10);
         }
         button:hover {
-            background-color: #D0AE93;
+            background-color: #cc9d78;
         }
         .reset-button {
             background-color: #4a4a4a;
@@ -140,7 +139,7 @@
         }
         .info-text {
             font-size: 12px;
-            color: #D0AE93;
+            color: #FFFFFFF;
             margin-top: 5px;
         }
         .passenger-info .form-row {
@@ -172,13 +171,13 @@
         .language-selector select {
             padding: 5px;
             font-size: 14px;
-            background-color: #D0AE93;
-            color: #002045;
-            border: 2px solid #000000;
+            background-color: #FFFFFF;
+            color: #000000;
+            border: 1px solid #000000;
             cursor: pointer;
         }
         .language-selector select:hover {
-            background-color: #D0AE93;
+            background-color: #FFFFFF;
         }
         .instructions {
             font-size: 10px;
@@ -187,7 +186,7 @@
         }
         .highlighted {
             font-weight: bold;
-            background-color: yellow;
+            background-color: D0AE93;
             color: black;
         }
         .account-number-container {
@@ -204,16 +203,16 @@
         .tab-container {
             display: flex;
             margin-bottom: 7px;
-      		border: 3px solid #D0AE93; /* Border connecting the buttons */
-    		border-radius: 5px; /* Rounded corners for the entire group */
+      		border: 1px solid #D0AE93; /* Border connecting the buttons */
+    		border-radius: 2px; /* Rounded corners for the entire group */
     		overflow: hidden; /* Ensure no gaps between buttons */
     		width: fit-content; /* Fit the size of the buttons */
-    		box-shadow: 0 2px 9px rgba(5, 5, 5, 10);
+    		box-shadow: 0 0px 3px rgba(5, 5, 5, 10);
         }
         .tab-button {
-            padding: 5px 20px;
+            padding: 6px 148px;
             background-color: #FFFFFF;
-            color: #002045;
+            color: #000000;
             border: none;
       		border-radius: 0px;
             cursor: pointer;
