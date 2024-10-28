@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -11,7 +9,34 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
-        body {
+      .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1px;
+            text-align: center;
+        }
+        
+         .logo {
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 1px;
+      		margin-left: 60px;
+            object-fit: contain;
+        }
+        
+        .form-title {
+            font-family: 'Montserrat', sans-serif;
+            color: #FFFFFF;
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin: 0;
+      		margin-bottom: 0px;
+            padding-top: 10px;
+      		padding-bottom: 1px;
+        }  
+      body {
             font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
             margin: 0;
@@ -23,32 +48,24 @@
             align-items: center;
             min-height: 100vh;
         }
-        .container {
+         .container {
             width: 100%;
             max-width: 800px;
-            background-color: #C4A484;
+            background: linear-gradient(135deg, #D4B595 0%, #9B7B5B 50%);
             padding: 20px;
       		border-radius: 10px;
       		box-shadow: 0 4px 200px rgba(0, 0, 0, 10);
-            border: 2px solid #C4A484;
+            border: 0px solid #C4A484;
             box-sizing: border-box;
             position: relative;
         }
         h1 {
-            text-align: center;
-    		color: #FFFFFF; 
-    		margin-bottom: 8px;
-    		font-size: 30px; 
-    		position: relative; 
-    		font-weight: bold;
-    		letter-spacing: 5px; 
-      		border-bottom: 1px solid #DCC7B7;
-      		padding-bottom: 20px;
+            display: none;
         }
         form {
             display: flex;
             flex-direction: column;
-            gap: 1px;
+            gap:1px;
         }
         .form-section {
             padding: 15px;
@@ -180,9 +197,10 @@
             background-color: #FFFFFF;
         }
         .instructions {
-            font-size: 10px;
+            font-size: 14px;
             margin-bottom: 20px;
             white-space: pre-wrap;
+      		line-height: 1.6;
         }
         .highlighted {
             font-weight: bold;
@@ -261,7 +279,12 @@
 
         <!-- Turkish content -->
         <div id="trContent">
-            <h1>Meet & Greet Rezervasyon Formu</h1>
+            <div class="header-container">
+                <img src="https://igapass.com/medias/?context=bWFzdGVyfGltYWdlc3w3NzM0fGltYWdlL3BuZ3xpbWFnZXMvaGM1L2hlMi85MDEyNTIwNzQ3MDM4LnBuZ3w3OWFmMzBiYjNmZjJiYWMxMGQ0ZDZiNTQ2Nzk3YzVmYjgzMDI4OGYwYmNiOTBiY2NmMTRmYzU3ZGE0NjRhMzUx" 
+                     alt="Meet & Greet Logo" 
+                     class="logo">
+                <p class="form-title">REZERVASYON FORMU</p>
+            </div>
             <form id="reservationFormTr">
                 <div class="form-section">
                     <h2>MİSAFİR BİLGİLERİ</h2>
@@ -487,7 +510,12 @@ Dikkat: Formu doldurmadan önce aşağıda paylaşılan talimatları dikkatlice 
 
         <!-- English content -->
         <div id="enContent" style="display: none;">
-            <h1>Meet & Greet Reservation Form</h1>
+            <div class="header-container">
+                <img src="https://igapass.com/medias/?context=bWFzdGVyfGltYWdlc3w3NzM0fGltYWdlL3BuZ3xpbWFnZXMvaGM1L2hlMi85MDEyNTIwNzQ3MDM4LnBuZ3w3OWFmMzBiYjNmZjJiYWMxMGQ0ZDZiNTQ2Nzk3YzVmYjgzMDI4OGYwYmNiOTBiY2NmMTRmYzU3ZGE0NjRhMzUx" 
+                     alt="Meet & Greet Logo" 
+                     class="logo">
+                <p class="form-title">RESERVATION FORM</p>
+            </div>
             <form id="reservationFormEn">
                 <div class="form-section">
                     <h2>GUEST INFORMATION</h2>
