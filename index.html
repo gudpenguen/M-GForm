@@ -819,55 +819,127 @@ document.addEventListener('DOMContentLoaded', function() {
                 return type;
         }
     }
+function downloadPDF(lang) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-    function downloadPDF(lang) {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+    // Add custom font
+    doc.addFont('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf', 'Roboto', 'normal');
+    doc.setFont('Roboto');
 
-        doc.addFont('https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf', 'Roboto', 'normal');
-        doc.setFont('Roboto');
+    // Add header with single color
+    doc.setFillColor(212, 181, 149); // Lighter brown (#D4B595)
+    doc.rect(0, 0, 210, 25, 'F');
 
-        doc.setFontSize(18);
-        doc.text(lang === 'Tr' ? "Meet & Greet Rezervasyon Formu" : "Meet & Greet Reservation Form", 105, 15, null, null, "center");
+    // Add title
+    doc.setFontSize(18);
+    doc.setTextColor(255, 255, 255); // White text
+    doc.text(lang === 'Tr' ? "Meet & Greet Rezervasyon Formu" : "Meet & Greet Reservation Form", 105, 16, null, null, "center");
 
-        const formData = new FormData(document.getElementById('reservationForm' + lang));
-        let data = [];
+    // Get form data
+    const formData = new FormData(document.getElementById('reservationForm' + lang));
+    let data = [];
 
-        for (let [key, value] of formData.entries()) {
-            const labelElement = document.querySelector(`label[for="${key + lang}"]`);
-            if (labelElement) {
-                const label = labelElement.textContent;
-                
-                if (key.includes('Date')) {
-                    value = formatDate(value, lang);
+    // Process form data
+    for (let [key, value] of formData.entries()) {
+        // Skip empty fields
+        if (!value || value.trim() === '') continue;
+        
+        const labelElement = document.querySelector(`label[for="${key + lang}"]`);
+        if (labelElement) {
+            const label = labelElement.textContent.replace(':', ''); // Remove colon from labels
+            
+            // Format special fields
+            if (key.includes('Date')) {
+                value = formatDate(value, lang);
+                // Skip if date is invalid or empty after formatting
+                if (!value) continue;
+            }
+            
+            if (key === 'serviceType') {
+                value = translateServiceType(value);
+                // Skip if it's the default "Select" option
+                if (value === 'Select' || value === 'Seçiniz') continue;
+            }
+
+            // Handle checkbox fields
+            if (key.startsWith('flowerGreeting') || 
+                key.startsWith('logoGreeting') || 
+                key.startsWith('cityTransfer') || 
+                key.startsWith('gatTransfer')) {
+                // Only include checked checkboxes
+                if (value === 'on') {
+                    value = lang === 'Tr' ? 'Evet' : 'Yes';
+                    data.push([label, value]);
                 }
-                
-                if (key === 'serviceType') {
-                    value = translateServiceType(value);
-                }
-
-                if (key.startsWith('flowerGreeting') || key.startsWith('logoGreeting') || key.startsWith('cityTransfer') || key.startsWith('gatTransfer')) {
-                    value = value === 'on' ? (lang === 'Tr' ? 'Evet' : 'Yes') : (lang === 'Tr' ? 'Hayır' : 'No');
-                }
-                
+                continue;
+            }
+            
+            // Only add non-empty values
+            if (value && value.trim() !== '') {
                 data.push([label, value]);
             }
         }
+    }
 
+    // Only generate PDF if there's data to show
+    if (data.length > 0) {
+        // Custom styling for table
         doc.autoTable({
-            head: [[lang === 'Tr' ? 'Alan' : 'Field', lang === 'Tr' ? 'Değer' : 'Value']],
             body: data,
-            startY: 25,
-            styles: { font: 'Roboto', fontSize: 10, cellPadding: 5 },
-            columnStyles: { 0: { cellWidth: 100 }, 1: { cellWidth: 90 } }
+            startY: 30,
+            theme: 'plain',
+            styles: {
+                font: 'Roboto',
+                fontSize: 10,
+                cellPadding: 2,
+                lineColor: [212, 181, 149], // Light brown for borders
+                lineWidth: 0.1,
+                valign: 'middle',
+                minCellHeight: 6
+            },
+            alternateRowStyles: {
+                fillColor: [240, 235, 230] // Light beige for alternate rows
+            },
+            columnStyles: {
+                0: {
+                    cellWidth: 90,
+                    fontStyle: 'bold',
+                    fillColor: [230, 225, 220] // Slightly darker beige for first column
+                },
+                1: {
+                    cellWidth: 100
+                }
+            },
+            margin: { top: 45 }
         });
 
+        // Add footer
+        const pageCount = doc.internal.getNumberOfPages();
+        doc.setFontSize(8);
+        doc.setTextColor(155, 123, 91); // Dark brown text
+        for (let i = 1; i <= pageCount; i++) {
+            doc.setPage(i);
+            doc.text(
+                'IGA Meet & Greet Services - ' + new Date().toLocaleDateString(),
+                105,
+                doc.internal.pageSize.height - 10,
+                null,
+                null,
+                'center'
+            );
+        }
+
+        // Save the PDF
         doc.save(lang === 'Tr' ? "meet_greet_rezervasyon_formu.pdf" : "meet_greet_reservation_form.pdf");
 
         // Activate the reset button after saving PDF
         activateResetButton(lang);
+    } else {
+        // Alert if no data was entered
+        alert(lang === 'Tr' ? 'Lütfen en az bir alan doldurun.' : 'Please fill in at least one field.');
     }
-
+}
     function resetForm(lang) {
         if (confirm(lang === 'Tr' ? 'Tüm bilgiler silinecek. Emin misiniz?' : 'All information will be deleted. Are you sure?')) {
             document.getElementById('reservationForm' + lang).reset();
